@@ -68,3 +68,29 @@ elif menu == "Atualizar quantidade":
                 st.warning(data["erro"])
         else:
             st.error("Erro ao atualizar produto.")
+
+elif menu == "Estoque":
+    st.subheader("📦 Controle de Estoque")
+
+    response = requests.get(f"{API_URL}/produtos")
+    
+    if response.status_code == 200:
+        produtos = response.json().get("produtos", [])
+
+        if not produtos:
+            st.info("Nenhum produto cadastrado!")
+        else:
+            st.write("### Todos os itens em estoque:")
+            st.dataframe(produtos)
+
+            categorias = list({p["categoria"] for p in produtos})
+            categoria_filtro = st.selectbox("Filtrar por categoria:", ["Todas"] + categorias)
+
+            if categoria_filtro != "Todas":
+                produtos_filtrados = [p for p in produtos if p["categoria"] == categoria_filtro]
+            else:
+                produtos_filtrados = produtos
+
+            st.write("### Resultado filtrado:")
+            st.dataframe(produtos_filtrados)
+
