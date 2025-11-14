@@ -35,3 +35,17 @@ elif menu == "Cadastrar Produto":
             st.success("Produto adicionado comsucesso!")
         else:
             st.error("Erro ao adicionar produto.")
+
+elif menu == "Deletar Produto":
+    st.subheader("🗑 Deletar produto")
+    id_produto = st.number_input("Id do produto e excluir", min_value=1, step=1)
+    if st.button("Excluir"):
+        response = requests.delete(f"{API_URL}/produtos/{id_produto}")
+        if response.status_code == 200:
+            data = response.json()
+            if "erro" not in data:
+                st.success("Produto excluido com sucesso!")
+            else:
+                st.error("Erro ao tentar excluir o filme")
+        else:
+            st.error("Erro ao excluir o produto")

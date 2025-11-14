@@ -71,7 +71,7 @@ def deletar_produto(id_produto):
         try:
             cursor.execute(
                 "DELETE FROM produtos WHERE id = %s",
-                (id_filme,)
+                (id_produto,)
             )
             conexao.commit()
             if cursor.rowcount > 0:
