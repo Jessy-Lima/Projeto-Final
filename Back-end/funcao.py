@@ -6,20 +6,22 @@ def criar_tabela():
         try:
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS produtos (
-                d SERIAL PRIMARY KEY,
+                id SERIAL PRIMARY KEY,
                 nome TEXT NOT NULL,
                 categoria TEXT NOT NULL,
                 preco REAL NOT NULL,
                 quantidade INTEGER
                 )
             """)
+            conexao.commit()
         except Exception as erro:
             print(f"Erro ao criar tabela: {erro}")
         finally:
             cursor.close()
             conexao.close()
-
-def adicionar_produto(nome, categoria, preco, quantidade):
+            
+criar_tabela()
+def cadastrar_produto(nome, categoria, preco, quantidade):
     conexao, cursor = conector()
     if conexao:
         try:
@@ -33,3 +35,19 @@ def adicionar_produto(nome, categoria, preco, quantidade):
         finally:
             cursor.close()
             conexao.commit()
+
+def listar_produtos():
+    conexao, cursor = conector()
+    if conexao:
+        try:
+            cursor.execute(
+            "SELECT * FROM produtos ORDER BY id"
+            )
+            return cursor.fetchall()
+        except Exception as erro:
+            print(f"Erro ao listar os produtos {erro}")
+        finally:
+            cursor.close()
+            conexao.close()
+
+

@@ -7,7 +7,7 @@ load_dotenv()
 
 def conector():
     try:
-        conexao = psycopg2.connector.connect(
+        conexao = psycopg2.connect(
             database=os.getenv("DB_NAME"),
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
@@ -19,3 +19,5 @@ def conector():
     except Exception as erro:
         print(f"Erro de conexão {erro}")
         return None, None
+
+conector()
