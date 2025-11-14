@@ -29,4 +29,20 @@ def listar_produtos():
         )
     return{"produtos":lista}
 
+@app.delete("/produtos/{id_produto}")
+def deletar_filme(id_produto: int):
+    filmes = funcao.buscar_produto(id_produto)
+    if filmes:
+        funcao.deletar_produto(id_produto)
+        return {"mensagem": "Produto excluído com sucesso!"}
+    else:
+        return{"erro": "Filme não encontrado"}
 
+@app.put("/produtos/{id_produto}")
+def atualizar_produto(id_produto: int, nova_quantidade: int):
+    produtos = funcao.buscar_produto(id_produto)
+    if produtos:
+        funcao.atualizar_produto(id_produto, nova_quantidade)
+        return {"mensagem": "Produto atualizado com sucesso"}
+    else:
+        return {"erro": "Produto não encontrado"}
